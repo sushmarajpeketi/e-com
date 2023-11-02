@@ -8,6 +8,7 @@ Back-end:
 2.install mongoose
 3.install dotenv
 4.install bcryptjs
+5.install jsonwebtoken
 
 specialities:-
  *app is made responsive by tailwind using sm:hidden , md ,lg etc while styling
@@ -22,7 +23,18 @@ mention in react
 4.by default ,json is not accepted by server ,to do so 
 app.use(express.json) 
 5.bcryptjs - created bcrypt for javasrcript while bcrypt is c oriented native 
-library. bcryptjs.hashsync("",saltRounds)
+library. bcryptjs.hashsync("",saltRounds) bcryptjs.compareSync(userGivenpassword,dbstoredPass)
+6.JWT- transmitting json data bt client and server
+    jwt.sign(payload,secretkey,options)
+        payload-user-specific data
+        secretkey-env variable key
+        options:http-only,expiry
+    jwt.verify(token, secretOrPublicKey, [options, callback])
+        it returns payload if token(decoded) is verified else err is thrown
+        
+
+
+
 
 git remote add origin https://github.com/sushmarajpeketi/e-com.git
 git branch -M main
