@@ -5,12 +5,20 @@ front-end:
 
 Back-end:
 1.install express
+2.install mongoose
+3.install dotenv
 
 
-specialities:-react-router-dom and html 5 api history api-no full page
- rendering
+specialities:-
  *app is made responsive by tailwind using sm:hidden , md ,lg etc while styling
 
+NewPoints:
+1.react-router-dom and html 5 api history api-no full page
+ rendering
+2.if we make any chnages to .env file nodemon cannot catch the changes .
+we need to ctrl+s the .env as well as index.js
+3.add .js at the end of import files in node and not required to 
+mention in react
 
 git remote add origin https://github.com/sushmarajpeketi/e-com.git
 git branch -M main
