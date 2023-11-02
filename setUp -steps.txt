@@ -7,7 +7,7 @@ Back-end:
 1.install express
 2.install mongoose
 3.install dotenv
-
+4.install bcryptjs
 
 specialities:-
  *app is made responsive by tailwind using sm:hidden , md ,lg etc while styling
@@ -19,6 +19,10 @@ NewPoints:
 we need to ctrl+s the .env as well as index.js
 3.add .js at the end of import files in node and not required to 
 mention in react
+4.by default ,json is not accepted by server ,to do so 
+app.use(express.json) 
+5.bcryptjs - created bcrypt for javasrcript while bcrypt is c oriented native 
+library. bcryptjs.hashsync("",saltRounds)
 
 git remote add origin https://github.com/sushmarajpeketi/e-com.git
 git branch -M main
