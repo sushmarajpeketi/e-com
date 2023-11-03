@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import OAuth from '../components/OAuth';
 
 export default function SignUp() {
@@ -29,11 +31,14 @@ export default function SignUp() {
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
+        toast.error(data.message)
         return;
       }
-      setLoading(false);
-      setError(null);
+      // setLoading(false);
+      // setError(null);
+      toast.success(data.message)
       navigate('/sign-in');
+      
     } catch (error) {
       console.log("error is")
       console.log(error)
