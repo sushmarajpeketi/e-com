@@ -35,6 +35,8 @@ export default function SignUp() {
       setError(null);
       navigate('/sign-in');
     } catch (error) {
+      console.log("error is")
+      console.log(error)
       setLoading(false);
       setError(error.message);
     }

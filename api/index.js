@@ -26,6 +26,8 @@ mongoose
   app.use((err,req,res,next)=>{
     const statusCode = err.statusCode || 500
     const message = err.message || 'Internal server error'
+    console.log("I am errorHandler middleware in index.js,Im called!")
+    console.log("error  mess",message)
     return res.status(statusCode).json({
         success: false,
         statusCode,

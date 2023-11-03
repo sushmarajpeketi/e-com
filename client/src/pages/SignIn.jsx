@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   signInStart,
-//   signInSuccess,
-//   signInFailure,
-// } from '../redux/user/userSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from '../redux/user/userSlice.js';
 // import OAuth from '../components/OAuth';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  // const { loading, error } = useSelector((state) => state.user);
-  const { loading, error } = useState(false)
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
+ 
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,7 +27,7 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // dispatch(signInStart());
+      dispatch(signInStart());
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
@@ -33,15 +37,28 @@ export default function SignIn() {
       });
       const data = await res.json();
       console.log(data);
+      
       if (data.success === false) {
-        // dispatch(signInFailure(data.message));
+        // setLoading(false)
+        // setError(data.message)
+        // return
+        console.log("I am an error in SignIn page",data)
+
+        dispatch(signInFailure(data.message));
+        toast.error(error)
         return;
       }
-      // dispatch(signInSuccess(data));
+      // setLoading(false)
+      // setError(null)
+
+      dispatch(signInSuccess(data));
+      toast.success("Login Sucess")
       navigate('/');
-    } catch (error) {
-      // dispatch(signInFailure(error.message));
-    }
+    } catch (err) {
+      console.log("I am a catch block err in signin page",err)
+      console.log(err)
+      dispatch(signInFailure(err.message));
+      toast.error(err.message)    }
   };
   return (
     <div className='p-3 max-w-lg mx-auto'>
@@ -76,7 +93,7 @@ export default function SignIn() {
           <span className='text-blue-700'>Sign up</span>
         </Link>
       </div>
-      {error && <p className='text-red-500 mt-5'>{error}</p>}
+          {error && <p className='text-red-500 mt-5'>{error}</p>}
     </div>
   );
 }

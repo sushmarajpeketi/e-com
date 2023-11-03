@@ -1,4 +1,3 @@
-import React from 'react'
 import {FaSearch} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
@@ -21,7 +20,7 @@ const Header = () => {
                 <li className='hidden sm:inline text-slate-700 hover:underline'>Home</li>
                 </Link>
                 <Link to='/about'>
-                <li className='hidden sm:inline text-slate-700 hover:underline'>Abour</li>
+                <li className='hidden sm:inline text-slate-700 hover:underline'>About</li>
                 </Link>
                 <Link to='/sign-in'>
                 <li className=' text-slate-700 hover:underline'>Sign in</li>

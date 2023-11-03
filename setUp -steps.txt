@@ -31,8 +31,25 @@ library. bcryptjs.hashsync("",saltRounds) bcryptjs.compareSync(userGivenpassword
         options:http-only,expiry
     jwt.verify(token, secretOrPublicKey, [options, callback])
         it returns payload if token(decoded) is verified else err is thrown
-        
+7.store.getState(),store.dispatch({type:song/add-song,payload:"new Song"})
+8.*************
+        try{
+            
+        }catch{
 
+        }
+        **the catch block willnot automatically get invoked if there is an error in 
+        the data received by fetch like depending on status code 404,
+        controll flow will shift to catch when there is an err in making the fetch 
+        request itself,or when any unhandled promise rejections are there with in 
+        the try block or any network errors.
+            **we can explicitly throw err and invoke catch block by 
+             if (!res.ok) {
+                 // Check if the response has a non-successful status code
+                throw new Error(`Response status: ${res.status}`);
+                } 
+        And if try block is successfully executed then it will not enter catch 
+        block
 
 
 
