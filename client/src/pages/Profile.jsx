@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   getDownloadURL,
   getStorage,
@@ -7,16 +9,16 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase';
-// import {
-//   updateUserStart,
-//   updateUserSuccess,
-//   updateUserFailure,
-//   deleteUserFailure,
-//   deleteUserStart,
-//   deleteUserSuccess,
-//   signOutUserStart,
-// } from '../redux/user/userSlice';
-// import { useDispatch } from 'react-redux';
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  // signOutUserStart,
+} from '../redux/user/userSlice';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 export default function Profile() {
   const fileRef = useRef(null);
@@ -28,7 +30,7 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   // const [showListingsError, setShowListingsError] = useState(false);
   // const [userListings, setUserListings] = useState([]);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // firebase storage
   // allow read;
@@ -57,6 +59,7 @@ export default function Profile() {
       },
       (error) => {
         setFileUploadError(true);
+        toast.error(error)
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
@@ -66,50 +69,61 @@ export default function Profile() {
     );
   };
 
-  // const handleChange = (e) => {
-  //   setFormData({ ...formData, [e.target.id]: e.target.value });
-  // };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     dispatch(updateUserStart());
-  //     const res = await fetch(`/api/user/update/${currentUser._id}`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(formData),
-  //     });
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       dispatch(updateUserFailure(data.message));
-  //       return;
-  //     }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+      console.log('currentUser id' ,currentUser._id)
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        toast.error(data.message)
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
 
-  //     dispatch(updateUserSuccess(data));
-  //     setUpdateSuccess(true);
-  //   } catch (error) {
-  //     dispatch(updateUserFailure(error.message));
-  //   }
-  // };
+      dispatch(updateUserSuccess(data));
+      toast.success("update Successful")
+      setUpdateSuccess(true);
+    } catch (error) {
+      dispatch(updateUserFailure(error.message));
+      toast.error(error.message)
+    }
+  };
 
-  // const handleDeleteUser = async () => {
-  //   try {
-  //     dispatch(deleteUserStart());
-  //     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-  //       method: 'DELETE',
-  //     });
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       dispatch(deleteUserFailure(data.message));
-  //       return;
-  //     }
-  //     dispatch(deleteUserSuccess(data));
-  //   } catch (error) {
-  //     dispatch(deleteUserFailure(error.message));
-  //   }
-  // };
+  const handleDeleteUser = async () => {
+    console.log("i am inside handleDeleteUser")
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      console.log("user_id to delete",currentUser._id)
+      console.log("user state",currentUser)
+      const data = await res.json();
+      console.log(data)
+      if (data.success === false) {
+        toast.error(data.message)
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      toast.success("user deleted succesfuly")
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      toast.error(error.message)
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
 
   // const handleSignOut = async () => {
   //   try {
@@ -164,7 +178,7 @@ export default function Profile() {
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
       <form  
-      // onSubmit={handleSubmit}
+      onSubmit={handleSubmit}
       className='flex flex-col gap-4'>
       
         <input
@@ -199,7 +213,7 @@ export default function Profile() {
           defaultValue={currentUser.username}
           id='username'
           className='border p-3 rounded-lg'
-          // onChange={handleChange}
+          onChange={handleChange}
         />
         <input
           type='email'
@@ -207,12 +221,12 @@ export default function Profile() {
           id='email'
           defaultValue={currentUser.email}
           className='border p-3 rounded-lg'
-          // onChange={handleChange}
+          onChange={handleChange}
         />
         <input
           type='password'
           placeholder='password'
-          // onChange={handleChange}
+          onChange={handleChange}
           id='password'
           className='border p-3 rounded-lg'
         />
@@ -231,7 +245,7 @@ export default function Profile() {
       </form>
       <div className='flex justify-between mt-5'>
         <span
-          // onClick={handleDeleteUser}
+          onClick={handleDeleteUser}
           className='text-red-700 cursor-pointer'
         >
           Delete account

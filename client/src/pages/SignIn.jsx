@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -51,7 +51,7 @@ export default function SignIn() {
       // setLoading(false)
       // setError(null)
 
-      dispatch(signInSuccess(data));
+      dispatch(signInSuccess(data.data));
       toast.success("Login Sucess")
       navigate('/');
     } catch (err) {
