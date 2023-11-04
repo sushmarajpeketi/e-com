@@ -10,6 +10,9 @@ Back-end:
 4.install bcryptjs
 5.install jsonwebtoken
 6.install redux-persist
+7.install fire-base
+
+redux toolkit webstore extension 
 
 specialities:-
  *app is made responsive by tailwind using sm:hidden , md ,lg etc while styling
