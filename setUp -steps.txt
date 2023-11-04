@@ -11,6 +11,7 @@ Back-end:
 5.install jsonwebtoken
 6.install redux-persist
 7.install fire-base
+8.install cookie-parser
 
 redux toolkit webstore extension 
 
