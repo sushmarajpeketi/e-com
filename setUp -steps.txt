@@ -2,6 +2,7 @@ front-end:
 1.configure tailwind vite from website
 2.react-router-dom
 3.react-icons
+4.Swiper
 
 Back-end:
 1.install express
