@@ -3,6 +3,7 @@ front-end:
 2.react-router-dom
 3.react-icons
 4.Swiper
+5.npm i -D @tailwindcss/line-clamp
 
 Back-end:
 1.install express
